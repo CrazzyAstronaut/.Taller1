@@ -11,6 +11,7 @@ public class Cuenta {
 	private int nivel;
 	private boolean statusBloqueado;
 	private ListaCampeonesPoseidos InventarioChamps;
+	private int precioCuenta;
 	
 	public Cuenta(String nombre, String contraseña, String nick, String region, int saldo, int nivel) {
 		this.nombre = nombre;
@@ -21,6 +22,7 @@ public class Cuenta {
 		this.nivel = nivel;
 		this.statusBloqueado = false;
 		this.InventarioChamps = new ListaCampeonesPoseidos(150);
+		this.precioCuenta = 0;
 	}
 
 	public String getNombre() {
@@ -100,6 +102,18 @@ public class Cuenta {
 
 	public void setInventarioChamps(ListaCampeonesPoseidos inventarioChamps) {
 		InventarioChamps = inventarioChamps;
+	}
+
+	public int getPrecioCuenta() {
+		return precioCuenta;
+	}
+
+	public void setPrecioCuenta(int precioCuenta) {
+		this.precioCuenta = precioCuenta;
+	}
+
+	public void setStatusBloqueado(boolean statusBloqueado) {
+		this.statusBloqueado = statusBloqueado;
 	}
 	
 

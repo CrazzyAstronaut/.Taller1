@@ -50,14 +50,14 @@ public class ListaCampeones {
 		return null;
 	}
 
-	public int getRecaudadoRol(String rol) {
+	public double getRecaudadoRol(String rol) {
 		int Recaudado = 0;
 		for(int i = 0; i < cant ; i++ ) {
 			if(lista[i].getRol().equals(rol)){
 				Recaudado += lista[i].getRecaudado();
 			}
 		}
-		return Recaudado;
+		return Recaudado*6.15;
 	}
 	
  	public boolean agregarCampeon(Campeon newchamp) {

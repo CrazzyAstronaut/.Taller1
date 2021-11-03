@@ -8,10 +8,10 @@ public class Campeon {
 	private int recaudado;
 	private ListaSkins InventarioSkins;
 	
-	public Campeon(String nombre, String rol, int recaudado) {
+	public Campeon(String nombre, String rol) {
 		this.nombre = nombre;
 		this.rol = rol;
-		this.recaudado = recaudado;
+		this.recaudado = 0;
 		InventarioSkins = new ListaSkins(999);
 	}
 

@@ -31,14 +31,21 @@ public class ListaCampeonesPoseidos {
 	public void setLista(CampeonPoseido[] lista) {
 		this.lista = lista;
 	}
-	public boolean comprarCampeon(Campeon champ, Cuenta cuenta) {
+	public boolean agregarCampeon(Campeon champ, Cuenta cuenta) {
 		CampeonPoseido newChamp = new CampeonPoseido(champ,cuenta);
 		if(cant<max) {
 			lista[cant] = newChamp;
 			cant++;
-			champ.addRecaudado(950);
 			return true;
 		}
 		return false;
+	}
+	public CampeonPoseido getCampeonPoseido(String nombre) {
+		for(int i = 0; i < cant ; i++ ) {
+			if(lista[i].getChamp().getNombre().equals(nombre)){
+				return lista[i];
+			}
+		}
+		return null;
 	}
 }
