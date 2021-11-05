@@ -1,0 +1,8 @@
+Campeon1,1950
+Campeon2,0
+Jinx,0
+Sett,0
+Lillia,0
+Vex,2325
+Jhin,4145
+Kaisa,2325

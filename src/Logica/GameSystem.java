@@ -20,4 +20,5 @@ public interface GameSystem {
 	public void desplegarCantPersonajesRol ();
 	public boolean bloquearJugador (String nombreCuenta);
 	public void desplegarCuentas ();
+	public boolean iniciarSesion(String nombreCuenta, String contraseña);
 }

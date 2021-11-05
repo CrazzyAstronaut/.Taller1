@@ -1,0 +1,8 @@
+Campeon1,SUP,2,Skin11,N,Skin12,E
+Campeon2,ADC,2,Skin21,N,Skin22,L
+Jinx,ADC,2,Elfa Buena,N,Guardiana estelar,L
+Sett,TOP,1,Puño del dragón,E
+Lillia,JG,1,Flor espiritual,E
+Vex,MID,1,Portadora del amanecer,E
+Jhin,ADC,2,Oscuridad Cosmica,L,Forajido,E
+Kaisa,ADC,1,Kda All Out,E

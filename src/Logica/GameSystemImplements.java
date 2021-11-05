@@ -14,6 +14,7 @@ public class GameSystemImplements implements GameSystem{
 	public GameSystemImplements() {
 		listaCuentas = new ListaCuentas(9999);
 		listaCampeones = new ListaCampeones(9999);
+		listaSkins = new ListaSkins(99999);
 	}
 	
 	@Override
@@ -28,7 +29,7 @@ public class GameSystemImplements implements GameSystem{
 
 	@Override
 	public boolean agregarSkin(String nombreSkin, String nombreChamp, String calidad) {
-		Skin skin = new Skin(calidad, listaCampeones.getCampeon(nombreChamp), calidad);
+		Skin skin = new Skin(nombreSkin, listaCampeones.getCampeon(nombreChamp), calidad);
 		if(listaCampeones.getCampeon(nombreChamp).getInventarioSkins().getSkin(nombreSkin)!= null) {
 			System.out.println("Ya existe");
 			return false;
@@ -203,6 +204,17 @@ public class GameSystemImplements implements GameSystem{
 	public void desplegarCuentas() {
 		listaCuentas.ordenar();
 		listaCuentas.desplegarCuentas();
+	}
+
+	@Override
+	public boolean iniciarSesion(String nombreCuenta, String contraseña) {
+		if(listaCuentas.getCuenta(nombreCuenta)==null) {
+			return false;
+		}
+		if(listaCuentas.getCuenta(nombreCuenta).getContraseña().equals(contraseña)==false) {
+			return false;
+		}
+		return true;
 	}
 
 }
