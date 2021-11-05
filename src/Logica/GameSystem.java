@@ -1,13 +1,8 @@
 package Logica;
 
-import Dominio.Campeon;
-import Dominio.Cuenta;
-import Dominio.Skin;
-
 public interface GameSystem {
 	public boolean agregarCampeon (String nombre, String rol);
 	public boolean agregarSkin (String nombreSkin, String nombreChamp, String calidad);
-	public boolean asociarSkinCampeon(String nombreSkin, String nombreChamp);
 	public boolean agregarCuenta (String nombreCuenta, String contraseña, String nick, String region, int nivel, int RP);
 	public boolean asociarCampeonCuenta(String nombreChamp, String nombreCuenta);
 	public boolean asociarSkinCuenta(String nombreSkin, String nombreCuenta, String nombreCamp);

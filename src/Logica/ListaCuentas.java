@@ -56,6 +56,15 @@ public class ListaCuentas {
 		}
 		return null;
 	}
+	public double getRecaudadoRegion(String Region) {
+		int Recaudado = 0;
+		for(int i = 0; i < cant ; i++ ) {
+			if(lista[i].getRegion().equals(Region)) {
+				Recaudado += lista[i].getPrecioCuenta();
+			}
+		}
+		return Recaudado*6.15;//aaaaaaaaaaaaaaaa
+	}
 	public boolean agregarCuenta(Cuenta newcuenta) {
 		if(cant<max) {
 			lista[cant] = newcuenta;

@@ -37,6 +37,19 @@ public class Cuenta {
 		return contraseña;
 	}
 
+	public String getContraseñaCensurada() {
+		String contraseñaCensored = "";
+		String partes [] = contraseña.split("");
+		String uno = partes[partes.length];
+		String dos = partes[partes.length-1];
+		String tre = partes[partes.length-2];
+		for(int i = 0 ; i < contraseña.length() - 2 ; i++) {
+			contraseñaCensored = contraseñaCensored+"*";
+		}
+		contraseñaCensored = contraseñaCensored+tre+dos+uno;
+		return contraseñaCensored;
+	}
+	
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
 	}
@@ -112,9 +125,8 @@ public class Cuenta {
 		this.precioCuenta = precioCuenta;
 	}
 
-	public void setStatusBloqueado(boolean statusBloqueado) {
-		this.statusBloqueado = statusBloqueado;
+	public void agregarPrecioCuenta(int cant) {
+		this.precioCuenta += cant;		
 	}
-	
 
 }

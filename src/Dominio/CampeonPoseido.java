@@ -36,5 +36,6 @@ public class CampeonPoseido {
 	public void setSkinsPoseidas(ListaSkinsPoseidas skinsPoseidas) {
 		this.skinsPoseidas = skinsPoseidas;
 	}
+	
 
 }

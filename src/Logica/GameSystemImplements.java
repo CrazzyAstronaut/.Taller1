@@ -33,18 +33,14 @@ public class GameSystemImplements implements GameSystem{
 			System.out.println("Ya existe");
 			return false;
 		}
-		return 	listaCampeones.getCampeon(nombreChamp).getInventarioSkins().agregarSkin(skin);
+		listaSkins.agregarSkin(skin);
+		return listaCampeones.getCampeon(nombreChamp).getInventarioSkins().agregarSkin(skin);
 
 	}
-
-	@Override
-	public boolean asociarSkinCampeon(String nombreSkin, String nombreChamp) {
-		
-		return false;
-	}	
 	
 	@Override
-	public boolean agregarCuenta(String nombreCuenta, String contraseña, String nick, String region,  int RP, int nivel) {
+	public boolean agregarCuenta(String nombreCuenta, String contraseña, String nick, String region,
+			int RP, int nivel) {
 		Cuenta cuenta = new Cuenta(nombreCuenta, contraseña, nick, region, RP, nivel);
 		return listaCuentas.agregarCuenta(cuenta);
 	}
@@ -72,34 +68,59 @@ public class GameSystemImplements implements GameSystem{
 	@Override
 	public boolean comprarSkin(String nombreChamp, String nombreSkin, String nombreCuenta) {
 		Cuenta cuenta = listaCuentas.getCuenta(nombreCuenta);
+		Campeon champ = listaCampeones.getCampeon(nombreChamp);
 		if(cuenta.getInventarioChamps().getCampeonPoseido(nombreChamp)==null) {
-			System.out.println("No posee el campeón");
+			System.out.println("No poseé el campeón");
 			return false;
 		}
-		
-		return false;
+		if(cuenta.getInventarioChamps().getCampeonPoseido(nombreChamp).getSkinsPoseidas().getSkinPoseida
+				(nombreSkin)!=null) {
+			System.out.println("Ya poseé la skin");
+			return false;
+		}
+		if(cuenta.getSaldo()<champ.getInventarioSkins().getSkin(nombreSkin).getPrecio()) {
+			System.out.println("El saldo no es suficiente");
+			return false;
+		}
+		Skin skin = listaCampeones.getCampeon(nombreChamp).getInventarioSkins().getSkin(nombreSkin);
+		cuenta.getInventarioChamps().getCampeonPoseido(nombreChamp).getSkinsPoseidas().agregarSkin(skin,
+				cuenta.getInventarioChamps().getCampeonPoseido(nombreChamp));
+		cuenta.restarSaldo(skin.getPrecio());
+		return true;
 	}
 
 	@Override
 	public boolean comprarPersonaje(String nombreChamp, String nombreCuenta) {
-		
+		Cuenta cuenta = listaCuentas.getCuenta(nombreCuenta);
+		Campeon champ = listaCampeones.getCampeon(nombreChamp);
+		if(cuenta.getInventarioChamps().getCampeonPoseido(nombreChamp)!=null) {
+			System.out.println("Ya poseé el campeón");
+			return false;
+		}
+		if(cuenta.getSaldo()<975) {
+			System.out.println("El saldo no es suficiente");
+		}
+		cuenta.getInventarioChamps().agregarCampeon(champ, cuenta);
+		cuenta.restarSaldo(975);
 		return false;
 	}
 
 	@Override
 	public void desplegarSkinsDisponibles(String nombreCuenta) {
-		
-		
+		Cuenta cuenta = listaCuentas.getCuenta(nombreCuenta);
+		int cant = listaSkins.getCant();
+		for(int i = 0 ; i < cant ; i++) {
+			if(cuenta.getInventarioChamps().tieneSkin(listaSkins.getSkin(i))) {
+				System.out.println(listaSkins.getSkin(i).getChamp().getNombre()+" "+listaSkins.getSkin(i).getNombre()+"("+
+				listaSkins.getSkin(i).getCalidad()+") "+listaSkins.getSkin(i).getPrecio()+" RP");
+			}
+		}
 	}
 
 	@Override
 	public void desplegarInventario(String nombreCuenta) {
 		Cuenta cuenta = listaCuentas.getCuenta(nombreCuenta);
-		int cant = cuenta.getInventarioChamps().getCant();
-		for(int i = 0; i < cant; i++) {
-			
-		}
-		
+		cuenta.getInventarioChamps().desplegarCampeonSkins();	
 	}
 
 	@Override
@@ -117,7 +138,7 @@ public class GameSystemImplements implements GameSystem{
 		Cuenta cuenta = listaCuentas.getCuenta(nombreCuenta);
 		System.out.println(" - Nombre de cuenta: " + nombreCuenta);
 		System.out.println(" - Nickname: "+cuenta.getNick());
-		System.out.println(" - Contraseña: ");
+		System.out.println(" - Contraseña: "+cuenta.getContraseñaCensurada());
 	}
 
 	@Override
@@ -141,8 +162,12 @@ public class GameSystemImplements implements GameSystem{
 
 	@Override
 	public void desplegarVentasRegion() {
-		
-		
+		System.out.println(" - La región de LAS ha recaudado: "+listaCuentas.getRecaudadoRegion("LAS")+" CLP");
+		System.out.println(" - La región de LAN ha recaudado: "+listaCuentas.getRecaudadoRegion("LAN")+" CLP");
+		System.out.println(" - La región de EUW ha recaudado: "+listaCuentas.getRecaudadoRegion("EUW")+" CLP");
+		System.out.println(" - La región de KR ha recaudado: "+listaCuentas.getRecaudadoRegion("KR")+" CLP");
+		System.out.println(" - La región de NA ha recaudado: "+listaCuentas.getRecaudadoRegion("NA")+" CLP");
+		System.out.println(" - La región de RU ha recaudado: "+listaCuentas.getRecaudadoRegion("RU")+" CLP");
 	}
 
 	@Override
@@ -156,8 +181,11 @@ public class GameSystemImplements implements GameSystem{
 
 	@Override
 	public void desplegarCantPersonajesRol() {
-		
-		
+		System.out.println(" - Personajes con el rol de SUP: "+listaCampeones.cantCampeonesRol("SUP"));
+		System.out.println(" - Personajes con el rol de ADC: "+listaCampeones.cantCampeonesRol("ADC"));
+		System.out.println(" - Personajes con el rol de TOP: "+listaCampeones.cantCampeonesRol("TOP"));
+		System.out.println(" - Personajes con el rol de MID: "+listaCampeones.cantCampeonesRol("MID"));
+		System.out.println(" - Personajes con el rol de JG: "+listaCampeones.cantCampeonesRol("JG"));
 	}
 
 	@Override

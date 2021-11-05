@@ -34,11 +34,28 @@ public class ListaSkinsPoseidas {
 	public SkinPoseida getSkinPoseida(int index) {
 		return lista[index];
 	}
+	public SkinPoseida getSkinPoseida(String nombre) {
+		for(int i = 0; i < cant; i++) {
+			if(lista[i].getSkin().getNombre().equals(nombre)) {
+				return lista[i];
+			}
+		}
+		return null;
+	}
+	public SkinPoseida getSkinPoseida(Skin skin) {
+		for(int i = 0; i < cant; i++) {
+			if(lista[i].getSkin()==skin) {
+				return lista[i];
+			}
+		}
+		return null;		
+	}
 	public boolean agregarSkin(Skin skin, CampeonPoseido champPoseido) {
 		SkinPoseida newskin = new SkinPoseida(skin,champPoseido);
 		if(cant<max) {
 			lista[cant] = newskin;
 			cant++;
+			champPoseido.getCuentaDueño().agregarPrecioCuenta(skin.getPrecio());
 			return true;
 		}
 		return false;

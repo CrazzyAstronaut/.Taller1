@@ -68,4 +68,14 @@ public class ListaCampeones {
 		}
 		return false;
 	}
+ 	
+ 	public int cantCampeonesRol(String rol) {
+ 		int cantidad = 0;
+		for(int i = 0; i < cant ; i++ ) {
+			if(lista[i].getRol().equals(rol)){
+				cantidad++;
+			}
+		}
+		return cantidad;
+ 	}
 }

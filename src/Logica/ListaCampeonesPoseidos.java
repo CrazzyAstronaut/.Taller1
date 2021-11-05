@@ -3,6 +3,7 @@ package Logica;
 import Dominio.Campeon;
 import Dominio.CampeonPoseido;
 import Dominio.Cuenta;
+import Dominio.Skin;
 
 public class ListaCampeonesPoseidos {
 	private int max;
@@ -36,10 +37,15 @@ public class ListaCampeonesPoseidos {
 		if(cant<max) {
 			lista[cant] = newChamp;
 			cant++;
+			cuenta.agregarPrecioCuenta(950);
 			return true;
 		}
 		return false;
 	}
+	public CampeonPoseido getCampeonPoseido(int index) {
+		return lista[index];
+	}
+
 	public CampeonPoseido getCampeonPoseido(String nombre) {
 		for(int i = 0; i < cant ; i++ ) {
 			if(lista[i].getChamp().getNombre().equals(nombre)){
@@ -47,5 +53,20 @@ public class ListaCampeonesPoseidos {
 			}
 		}
 		return null;
+	}
+	public void desplegarCampeonSkins() {
+		for(int i = 0; i < cant ; i++) {
+			String champ = lista[i].getChamp().getNombre();
+			System.out.println("	- "+champ);
+			lista[i].getSkinsPoseidas().desplegarSkins();;
+		}
+	}
+	public boolean tieneSkin (Skin skin) {
+		for(int i=0;i<cant;i++) {
+			if(lista[i].getSkinsPoseidas().getSkinPoseida(skin)==null) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
