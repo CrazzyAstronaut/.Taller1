@@ -40,10 +40,10 @@ public class Cuenta {
 	public String getContraseñaCensurada() {
 		String contraseñaCensored = "";
 		String partes [] = contraseña.split("");
-		String uno = partes[partes.length];
-		String dos = partes[partes.length-1];
-		String tre = partes[partes.length-2];
-		for(int i = 0 ; i < contraseña.length() - 2 ; i++) {
+		String uno = partes[partes.length-1];
+		String dos = partes[partes.length-2];
+		String tre = partes[partes.length-3];
+		for(int i = 0 ; i < contraseña.length()-3 ; i++) {
 			contraseñaCensored = contraseñaCensored+"*";
 		}
 		contraseñaCensored = contraseñaCensored+tre+dos+uno;

@@ -75,7 +75,7 @@ public class ListaCuentas {
 	}
 	public void ordenar() {
 		for(int i = 0; i < cant; i++) {
-			for(int j = 0; j < cant; j++) {
+			for(int j = 0; j < cant-1; j++) {
 				if(lista[j].getNivel()<lista[j+1].getNivel()) {
 					Cuenta aux = lista[j];
 					lista[j]=lista[j+1];

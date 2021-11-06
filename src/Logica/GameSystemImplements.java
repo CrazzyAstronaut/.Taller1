@@ -42,7 +42,7 @@ public class GameSystemImplements implements GameSystem{
 	@Override
 	public boolean agregarCuenta(String nombreCuenta, String contraseña, String nick, String region,
 			int RP, int nivel) {
-		Cuenta cuenta = new Cuenta(nombreCuenta, contraseña, nick, region, RP, nivel);
+		Cuenta cuenta = new Cuenta(nombreCuenta, contraseña, nick, region, nivel, RP);
 		return listaCuentas.agregarCuenta(cuenta);
 	}
 
@@ -70,6 +70,14 @@ public class GameSystemImplements implements GameSystem{
 	public boolean comprarSkin(String nombreChamp, String nombreSkin, String nombreCuenta) {
 		Cuenta cuenta = listaCuentas.getCuenta(nombreCuenta);
 		Campeon champ = listaCampeones.getCampeon(nombreChamp);
+		if(champ==null) {
+			System.out.println("El campeón no existe");
+			return false;
+		}
+		if(champ.getInventarioSkins().getSkin(nombreSkin)==null) {
+			System.out.println("La skin no existe");
+			return false;
+		}
 		if(cuenta.getInventarioChamps().getCampeonPoseido(nombreChamp)==null) {
 			System.out.println("No poseé el campeón");
 			return false;
@@ -111,9 +119,9 @@ public class GameSystemImplements implements GameSystem{
 		Cuenta cuenta = listaCuentas.getCuenta(nombreCuenta);
 		int cant = listaSkins.getCant();
 		for(int i = 0 ; i < cant ; i++) {
-			if(cuenta.getInventarioChamps().tieneSkin(listaSkins.getSkin(i))) {
-				System.out.println(listaSkins.getSkin(i).getChamp().getNombre()+" "+listaSkins.getSkin(i).getNombre()+"("+
-				listaSkins.getSkin(i).getCalidad()+") "+listaSkins.getSkin(i).getPrecio()+" RP");
+			if(cuenta.getInventarioChamps().tieneSkin(listaSkins.getSkin(i))==false) {
+				System.out.println(listaSkins.getSkin(i).getChamp().getNombre()+" "+listaSkins.getSkin(i).getNombre()+"	("+
+				listaSkins.getSkin(i).getCalidad()+")	"+listaSkins.getSkin(i).getPrecio()+" RP");
 			}
 		}
 	}
@@ -139,6 +147,7 @@ public class GameSystemImplements implements GameSystem{
 		Cuenta cuenta = listaCuentas.getCuenta(nombreCuenta);
 		System.out.println(" - Nombre de cuenta: " + nombreCuenta);
 		System.out.println(" - Nickname: "+cuenta.getNick());
+		System.out.println(" - Saldo: "+cuenta.getSaldo());
 		System.out.println(" - Contraseña: "+cuenta.getContraseñaCensurada());
 	}
 
@@ -192,6 +201,7 @@ public class GameSystemImplements implements GameSystem{
 	@Override
 	public boolean bloquearJugador(String nombreCuenta) {
 		Cuenta cuenta = listaCuentas.getCuenta(nombreCuenta);
+		if (cuenta==null) {System.out.println("No se encontró la cuenta");return false;}
 		if (cuenta.isStatusBloqueado()) {
 			System.out.println("Cuenta ya bloqueada");
 			return false;
@@ -207,14 +217,18 @@ public class GameSystemImplements implements GameSystem{
 	}
 
 	@Override
-	public boolean iniciarSesion(String nombreCuenta, String contraseña) {
+	public int iniciarSesion(String nombreCuenta, String contraseña) {
 		if(listaCuentas.getCuenta(nombreCuenta)==null) {
-			return false;
+			return 1;
 		}
 		if(listaCuentas.getCuenta(nombreCuenta).getContraseña().equals(contraseña)==false) {
-			return false;
+			return 1;
 		}
-		return true;
+		if(listaCuentas.getCuenta(nombreCuenta).isStatusBloqueado()==true) {
+			System.out.println("Esta cuenta ha sido bloqueada");
+			return 2;
+		}
+		return 0;
 	}
 
 }
