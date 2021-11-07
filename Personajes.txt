@@ -6,3 +6,4 @@ Lillia,JG,1,Flor espiritual,E
 Vex,MID,1,Portadora del amanecer,E
 Jhin,ADC,2,Oscuridad Cosmica,L,Forajido,E
 Kaisa,ADC,1,Kda All Out,E
+Steve,JG,1,Elegante,E

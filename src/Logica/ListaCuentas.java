@@ -63,7 +63,7 @@ public class ListaCuentas {
 				Recaudado += lista[i].getPrecioCuenta();
 			}
 		}
-		return Recaudado*6.15;//aaaaaaaaaaaaaaaa
+		return Recaudado*6.15;
 	}
 	public boolean agregarCuenta(Cuenta newcuenta) {
 		if(cant<max) {

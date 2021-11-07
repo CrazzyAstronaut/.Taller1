@@ -98,7 +98,7 @@ public class Cuenta {
 		this.nivel = nivel;
 	}
 	public void subirNivel() {
-		this.nivel++;
+		nivel++;
 	}
 
 	public boolean isStatusBloqueado() {

@@ -2,11 +2,14 @@ package Logica;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class App {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		GameSystem sistema = new GameSystemImplements();
 		LeerArchivos(sistema);
 		MenuPrincipal(sistema);
@@ -15,24 +18,25 @@ public class App {
 
 	private static void MenuPrincipal(GameSystem sistema) {
 		System.out.println("Bienvenido a Juego genérico");
-		System.out.println("[1]	Iniciar sesión	[2]	Registrarse	[3]	Salir");
+		System.out.println("[1]	Iniciar sesión	[2]	Registrarse	[0]	Salir");
+		System.out.println("Nota: Si quiere volver atras en cualquier punto escriba (0)");
 		Scanner S3 = new Scanner(System.in);
 		String MainOption = S3.nextLine();
-		while ((MainOption.equals("1"))==false&&(MainOption.equals("2"))==false&&(MainOption.equals("3"))==false) {
+		while ((MainOption.equals("1"))==false&&(MainOption.equals("2"))==false&&(MainOption.equals("0"))==false) {
 			System.out.println("Opcion invalida");
 			MainOption = S3.nextLine();
 		}
 
-		while(MainOption.equals("3") == false) {
+		while(MainOption.equals("0") == false) {
 			if(MainOption.equals("1")) {
 				iniciarSesion(sistema);
 			}
 			if(MainOption.equals("2")) {
 				registrar(sistema);
 			}
-			System.out.println("[1]	Iniciar sesión	[2]	Registrarse	[3]	Salir");
+			System.out.println("[1]	Iniciar sesión	[2]	Registrarse	[0]	Salir");
 			MainOption = S3.nextLine();
-			while ((MainOption.equals("1"))==false&&(MainOption.equals("2"))==false&&(MainOption.equals("3"))==false) {
+			while ((MainOption.equals("1"))==false&&(MainOption.equals("2"))==false&&(MainOption.equals("0"))==false) {
 				System.out.println("Opcion invalida");
 				MainOption = S3.nextLine();
 			}
@@ -40,7 +44,21 @@ public class App {
 	}
 
 	private static void registrar(GameSystem sistema) {
-		
+		Scanner S = new Scanner(System.in);
+		System.out.println("Ingrese su nombre de usuario: ");
+		String nombreCuenta= S.nextLine();
+		if(nombreCuenta.equals("0")) {return;}
+		System.out.println("Ingrese su contraseña (Debe tner un minimo de caracteres de 4)");
+		String contraseña= S.nextLine();
+		while(contraseña.equals("0")==false&&contraseña.length()<4) {
+			System.out.println("Ingrese un valor valido: ");contraseña = S.nextLine();}
+		if(contraseña.equals("0")) {return;}
+		System.out.println("Ingrese su nickname: ");
+		String nickname= S.nextLine();
+		System.out.println("Ingrese su región: ");
+		String region = S.nextLine();
+		sistema.agregarCuenta(nombreCuenta, contraseña, nickname, region, 0, 0);
+		System.out.println("Se ha ingresado con exito...");
 	}
 
 	private static void iniciarSesion(GameSystem sistema) {
@@ -50,15 +68,15 @@ public class App {
 		System.out.println("Ingrese su contraseña");
 		String contraseña = S0.nextLine();
 		while((sistema.iniciarSesion(nombreCuenta,contraseña)==1)&&(nombreCuenta.equals("ADMIN")==false||
-				contraseña.equals("ADMIN")==false)&&(nombreCuenta.equals("3")==false)) {
-			System.out.println("Nombre de cuenta o contraseña incorrectos, si desea volver al menu anterior escriba (3)");
+				contraseña.equals("ADMIN")==false)&&(nombreCuenta.equals("0")==false)) {
+			System.out.println("Nombre de cuenta o contraseña incorrectos, si desea volver al menu anterior escriba (0)");
 			System.out.println("Ingrese su nombre de usuario");
 			nombreCuenta = S0.nextLine();
 			System.out.println("Ingrese su nombre de usuario");
 			contraseña = S0.nextLine();
 		}
-		if(nombreCuenta.equals("3")) {
-			S0.close();return;}
+		if(nombreCuenta.equals("0")) {
+			return;}
 		if(nombreCuenta.equals("ADMIN")) {
 			adminOptions(sistema);
 		}
@@ -83,6 +101,7 @@ public class App {
 		}
 		while(op.equals("0")==false) {
 			if(op.equals("1")) {
+				System.out.println(" - Menu de compra de skin - ");
 				System.out.println("Ingrese el nombre del personaje que decea comprar la skin");
 				String nombreChamp = S.nextLine();
 				System.out.println("Ingrese el nombre de la skin que desea comprar");
@@ -94,8 +113,10 @@ public class App {
 					System.out.println("Ingrese el nombre de la skin que desea comprar");
 					nombreSkin = S.nextLine();
 				}
+				System.out.println("Volviendo al menu...");
 			}
 			if(op.equals("2")) {
+				System.out.println(" - Menu de compra de personaje - ");
 				System.out.println("Ingrese el nombre del personaje que decea comprar");
 				String nombreChamp = S.nextLine();
 				while(sistema.comprarPersonaje(nombreChamp, nombreCuenta)==false&&nombreChamp.equals("0")==false) {
@@ -103,18 +124,57 @@ public class App {
 					System.out.println("Ingrese el nombre del personaje que decea comprar");
 					nombreChamp = S.nextLine();
 				}
+				System.out.println("Volviendo al menu...");				
 			}
-			if(op.equals("3")) {sistema.desplegarSkinsDisponibles(nombreCuenta);}
-			if(op.equals("4")) {sistema.desplegarInventario(nombreCuenta);}
+			if(op.equals("3")) {System.out.println(" - Skins disponibles para comprar - ");sistema.desplegarSkinsDisponibles(nombreCuenta);}
+			if(op.equals("4")) {System.out.println(" - Inventario - ");sistema.desplegarInventario(nombreCuenta);}
 			if(op.equals("5")) {
-				sistema.recargarRP(nombreCuenta, 0);
+				System.out.println(" - Recargar RP - ");
+				System.out.println("Ingrese la cantidad de RP que desea agregar a su cuenta");
+				String RPadd = S.nextLine();
+				while(correctNumber(RPadd)==false) {System.out.println("Ingrese una cantidad valida");RPadd = S.nextLine();}
+				int RP = Integer.parseInt(RPadd);
+				if(sistema.recargarRP(nombreCuenta, RP)) {
+					System.out.println("Compra exitosa");
 				}
+				System.out.println("Volviendo al menu...");
+			}
 			if(op.equals("6")) {
+				System.out.println(" - Informacion de cuenta - ");
 				sistema.desplegarDatosCuenta(nombreCuenta);
-				
+				System.out.println("¿Desea cambiar su contraseña? ([0] No	[1] Si)");
+				String o = S.nextLine();
+				while(o.equals("0")==false&&o.equals("1")==false) {System.out.println("Ingrese una opcion valida");
+					o = S.nextLine();}
+				if (o.equals("1")) {
+					System.out.println("Ingrese su contraseña");
+					String oldPass = S.nextLine();
+					while(sistema.iniciarSesion(nombreCuenta, oldPass)!=0&&oldPass.equals("0")==false) {
+						System.out.println("Contraseña incorrecta :");
+						oldPass = S.nextLine();
+					}
+					if(oldPass.equals("0")==false) {
+						System.out.println("Ingrese la nueva contraseña (Debe tener un minimo de 4 caracteres)");
+						String newPass1 = S.nextLine();
+						while(newPass1.equals("0")==false&&newPass1.length()<4) {
+							System.out.println("Intentelo denuevo: ");newPass1 = S.nextLine();
+						}
+						if (newPass1.equals("0")==false) {
+							System.out.println("Ingrese nuevamente la contraseña");
+							String newPass2 = S.nextLine();
+							while(newPass2.equals("0")==false&&newPass2.equals(newPass1)==false) {
+								System.out.println("Porfavor intentelo denuvo");newPass2 = S.nextLine();
+							}
+							if(newPass2.equals("0")==false) {
+								sistema.cambiarContraseña(nombreCuenta, newPass2);
+								System.out.println("La contraseña se ha cambiado");
+							}
+						}
+					}
+				}
 			}
 			System.out.println("Seleccione una opcion [1] Comprar Skin		[2] Comprar Personaje	[3] Skins Disponibles	[4] Mostrar Inventario  ");
-			System.out.println("                      [5] RecargarRP	[6] Mostrar datos	[0] Salir");
+			System.out.println("                      [5] RecargarRP		[6] Mostrar datos		[0] Salir");
 			op = S.nextLine();
 			while ((op.equals("1")) ==false&&(op.equals("2"))==false&&(op.equals("3"))==false&&(op.equals("4"))==false&&(op.equals("5"))==false&&(op.equals("6"))==false
 					&&(op.equals("0"))==false) {
@@ -122,15 +182,12 @@ public class App {
 				op = S.nextLine();
 			}
 		}
-		S.close();
 	}
-
-//agregar bloqueado de cuenta
 
 	private static void adminOptions(GameSystem sistema) {
 		System.out.println("Bienvenido al menu de administrador");
-		System.out.println("Seleccione una opcion [1] Ventas por rol		[2] Ventas por región	[3] Ventas por personaje	[4] Cantidad de personajes por rol  ");
-		System.out.println("                      [5] Agregar personaje al juego	[6] Agregar skin al juego	[7] Bloquear jugador	[8] Desplegar cuentas	[0] Salir");
+		System.out.println("Seleccione una opcion [1] Ventas por rol		[2] Ventas por región		[3] Ventas por personaje	[4] Cantidad de personajes por rol  ");
+		System.out.println("                      [5] Agregar personaje al juego	[6] Agregar skin al juego	[7] Bloquear jugador	[8] Desplegar cuentas		[0] Salir");
 		Scanner S = new Scanner(System.in);
 		String op = S.nextLine();
 		while ((op.equals("1")) ==false&&(op.equals("2"))==false&&(op.equals("3"))==false&&(op.equals("4"))==false&&(op.equals("5"))==false&&(op.equals("6"))==false
@@ -216,7 +273,6 @@ public class App {
 				op = S.nextLine();
 			}
 		}
-		S.close();
 		
 	}
 
@@ -278,8 +334,27 @@ public class App {
         }
         arch3.close();
 	}
-	private static void EscribirArchivos(GameSystem sistema) {
-		// TODO Auto-generated method stub
-		
+	
+	private static void EscribirArchivos(GameSystem sistema) throws IOException {
+		FileWriter file1 = new FileWriter("Personajes.txt");
+		sistema.guardarPersonajes(file1);
+		FileWriter file2 = new FileWriter("Estadísticas.txt");
+		sistema.guardarEstadisticas(file2);
+		FileWriter file3 = new FileWriter("Cuentas.txt");
+		sistema.guardarCuentas(file3);
+	}
+	public static boolean correctNumber(String numero) {
+        String partes[] = numero.split("");
+        if( 8 <= partes.length && partes.length <= 9) {
+        	for(int i = 0; i < partes.length-1; i++) {
+        		if(partes[i].equals("0")==false&&partes[i].equals("1")==false&&partes[i].equals("2")==false&&
+        				partes[i].equals("3")==false&&partes[i].equals("4")==false&&partes[i].equals("5")==false&&
+        				partes[i].equals("6")==false&&partes[i].equals("7")==false&&partes[i].equals("8")==false&&
+        				partes[i].equals("9")==false) {
+        			return false;
+        		}
+        	}
+        }
+        return true;
 	}
 }

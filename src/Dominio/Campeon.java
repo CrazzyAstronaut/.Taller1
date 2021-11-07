@@ -40,7 +40,7 @@ public class Campeon {
 	}
 	
 	public void addRecaudado(int add) {
-		this.recaudado =+ add;
+		this.recaudado += add;
 	}
 
 	public ListaSkins getInventarioSkins() {

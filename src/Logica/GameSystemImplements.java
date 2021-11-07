@@ -1,5 +1,8 @@
 package Logica;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 import Dominio.Campeon;
 import Dominio.CampeonPoseido;
 import Dominio.Cuenta;
@@ -91,10 +94,16 @@ public class GameSystemImplements implements GameSystem{
 			System.out.println("El saldo no es suficiente");
 			return false;
 		}
+		if(cuenta.getInventarioChamps().getCant()>=cuenta.getInventarioChamps().getMax()) {
+			System.out.println("No puede poseér mas campeones");
+			return false;
+		}
 		Skin skin = listaCampeones.getCampeon(nombreChamp).getInventarioSkins().getSkin(nombreSkin);
-		cuenta.getInventarioChamps().getCampeonPoseido(nombreChamp).getSkinsPoseidas().agregarSkin(skin,
-				cuenta.getInventarioChamps().getCampeonPoseido(nombreChamp));
+		cuenta.getInventarioChamps().getCampeonPoseido(nombreChamp).getSkinsPoseidas().agregarSkin
+		(skin,cuenta.getInventarioChamps().getCampeonPoseido(nombreChamp));
+		champ.addRecaudado(skin.getPrecio());
 		cuenta.restarSaldo(skin.getPrecio());
+		System.out.println("Compra exitosa");
 		return true;
 	}
 
@@ -108,10 +117,14 @@ public class GameSystemImplements implements GameSystem{
 		}
 		if(cuenta.getSaldo()<975) {
 			System.out.println("El saldo no es suficiente");
+			return false;
 		}
 		cuenta.getInventarioChamps().agregarCampeon(champ, cuenta);
+		champ.addRecaudado(975);
 		cuenta.restarSaldo(975);
-		return false;
+		cuenta.subirNivel();
+		System.out.println("Compra exitosa");
+		return true;
 	}
 
 	@Override
@@ -153,8 +166,8 @@ public class GameSystemImplements implements GameSystem{
 
 	@Override
 	public boolean cambiarContraseña(String nombreCuenta, String newcontraseña) {
-		if(newcontraseña.equalsIgnoreCase("SALIR")) {
-			System.out.println("La contraseña no puede ser SALIR ");
+		if(newcontraseña.equals("0")) {
+			System.out.println("La contraseña no puede ser (0) ");
 			return false;
 		}
 		listaCuentas.getCuenta(nombreCuenta).setContraseña(newcontraseña);
@@ -225,10 +238,57 @@ public class GameSystemImplements implements GameSystem{
 			return 1;
 		}
 		if(listaCuentas.getCuenta(nombreCuenta).isStatusBloqueado()==true) {
-			System.out.println("Esta cuenta ha sido bloqueada");
 			return 2;
 		}
 		return 0;
+	}
+
+	@Override
+	public FileWriter guardarPersonajes(FileWriter file1) {
+		PrintWriter escritura = new PrintWriter(file1);
+		for(int i=0;i<listaCampeones.getCant();i++) {
+			escritura.print(listaCampeones.getCampeon(i).getNombre()+","+listaCampeones.getCampeon(i).getRol()
+					+","+listaCampeones.getCampeon(i).getInventarioSkins().getCant());
+			for(int j=0;j<listaCampeones.getCampeon(i).getInventarioSkins().getCant();j++) {
+				escritura.print(","+listaCampeones.getCampeon(i).getInventarioSkins().getSkin(j).getNombre()+","
+			+listaCampeones.getCampeon(i).getInventarioSkins().getSkin(j).getCalidad());
+			}
+			escritura.println();
+		}
+		escritura.close();
+		return file1;
+	}
+
+	@Override
+	public FileWriter guardarEstadisticas(FileWriter file2) {
+		PrintWriter escritura = new PrintWriter(file2);
+		for(int i=0;i<listaCampeones.getCant();i++) {
+			escritura.print(listaCampeones.getCampeon(i).getNombre()+","+listaCampeones.getCampeon(i).getRecaudado());
+			escritura.println();
+		}
+		escritura.close();
+		return file2;
+	}
+
+	@Override
+	public FileWriter guardarCuentas(FileWriter file3) {
+		PrintWriter escritura = new PrintWriter(file3);
+		for(int i=0;i<listaCuentas.getCant();i++) {
+			Cuenta cuenta = listaCuentas.getCuenta(i);
+			escritura.print(cuenta.getNombre()+","+cuenta.getContraseña()+","+cuenta.getNick()+","+cuenta.getNivel()+","+cuenta.getSaldo()+","
+			+cuenta.getInventarioChamps().getCant());
+			for(int j=0;j<cuenta.getInventarioChamps().getCant();j++) {
+				CampeonPoseido champ = cuenta.getInventarioChamps().getCampeonPoseido(j);
+				escritura.print(","+champ.getChamp().getNombre()+","+champ.getSkinsPoseidas().getCant());
+				for(int n=0;n<champ.getSkinsPoseidas().getCant();n++) {
+					escritura.print(","+champ.getSkinsPoseidas().getSkinPoseida(n).getSkin().getNombre());
+				}
+			}
+			escritura.print(","+cuenta.getRegion());
+			escritura.println();
+		}
+		escritura.close();
+		return file3;
 	}
 
 }

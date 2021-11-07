@@ -1,5 +1,7 @@
 package Logica;
 
+import java.io.FileWriter;
+
 public interface GameSystem {
 	public boolean agregarCampeon (String nombre, String rol);
 	public boolean agregarSkin (String nombreSkin, String nombreChamp, String calidad);
@@ -21,4 +23,8 @@ public interface GameSystem {
 	public boolean bloquearJugador (String nombreCuenta);
 	public void desplegarCuentas ();
 	public int iniciarSesion(String nombreCuenta, String contraseña);
+	public FileWriter guardarPersonajes(FileWriter file1);
+	public FileWriter guardarEstadisticas(FileWriter file2);
+	public FileWriter guardarCuentas(FileWriter file3);
+
 }
