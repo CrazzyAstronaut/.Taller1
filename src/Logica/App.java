@@ -6,10 +6,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * @author Vicente Rojas
+ * @author Claudio Cortes
+ */
 public class App {
 
 	private static Scanner s;
 
+	/**
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		GameSystem sistema = new GameSystemImplements();
 		LeerArchivos(sistema);
@@ -17,6 +26,11 @@ public class App {
 		EscribirArchivos(sistema);
 	}
 
+	/**
+	 * This function allows the management between the other options of the App
+	 * 
+	 * @param sistema
+	 */
 	private static void MenuPrincipal(GameSystem sistema) {
 		System.out.println("Bienvenido a Juego genérico");
 		System.out.println("[1]	Iniciar sesión	[2]	Registrarse	[0]	Salir");
@@ -46,6 +60,12 @@ public class App {
 		}
 	}
 
+	/**
+	 * This function asks for the necessary data to create another account and enter
+	 * it into the system
+	 * 
+	 * @param sistema
+	 */
 	private static void registrar(GameSystem sistema) {
 		s = new Scanner(System.in);
 		System.out.println("Ingrese su nombre de usuario: ");
@@ -86,6 +106,12 @@ public class App {
 		System.out.println("Se ha registrado con exito...");
 	}
 
+	/**
+	 * This function asks for account data already registered and allows access to
+	 * the options
+	 * 
+	 * @param sistema
+	 */
 	private static void iniciarSesion(GameSystem sistema) {
 		System.out.println("Ingrese su nombre de usuario: ");
 		s = new Scanner(System.in);
@@ -117,6 +143,12 @@ public class App {
 		}
 	}
 
+	/**
+	 * This function shows the options available for a user account
+	 * 
+	 * @param sistema
+	 * @param nombreCuenta
+	 */
 	private static void cuentaOptions(GameSystem sistema, String nombreCuenta) {
 		System.out.println("Bienvenido de vuelta");
 		System.out.println(
@@ -233,6 +265,11 @@ public class App {
 		}
 	}
 
+	/**
+	 * This function shows the options available for the administrator menu
+	 * 
+	 * @param sistema
+	 */
 	private static void adminOptions(GameSystem sistema) {
 		System.out.println("Bienvenido al menu de administrador");
 		System.out.println(
@@ -377,6 +414,12 @@ public class App {
 
 	}
 
+	/**
+	 * This function reads the text files and enters the data into the system.
+	 * 
+	 * @param sistema
+	 * @throws FileNotFoundException
+	 */
 	private static void LeerArchivos(GameSystem sistema) throws FileNotFoundException {
 		File file1 = new File("Personajes.txt");
 		Scanner arch1 = new Scanner(file1);
@@ -436,6 +479,12 @@ public class App {
 		arch3.close();
 	}
 
+	/**
+	 * This function saves the system data in its corresponding text files
+	 * 
+	 * @param sistema
+	 * @throws IOException
+	 */
 	private static void EscribirArchivos(GameSystem sistema) throws IOException {
 		FileWriter file1 = new FileWriter("Personajes.txt");
 		sistema.guardarPersonajes(file1);
@@ -445,6 +494,12 @@ public class App {
 		sistema.guardarCuentas(file3);
 	}
 
+	/**
+	 * This function allows you to know if a String is well written to be an integer
+	 * 
+	 * @param numero
+	 * @return
+	 */
 	public static boolean correctNumber(String numero) {
 		String partes[] = numero.split("");
 		if (8 <= partes.length && partes.length <= 9) {

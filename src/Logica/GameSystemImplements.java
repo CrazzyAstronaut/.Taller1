@@ -2,12 +2,14 @@ package Logica;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
-
 import Dominio.Campeon;
 import Dominio.CampeonPoseido;
 import Dominio.Cuenta;
 import Dominio.Skin;
-
+/**
+ * @author Vicente Rojas
+ * @author Claudio Cortes 
+ */
 public class GameSystemImplements implements GameSystem {
 
 	private ListaCuentas listaCuentas;
