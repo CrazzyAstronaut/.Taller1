@@ -6,7 +6,7 @@ public class CampeonPoseido {
 	private Campeon champ;
 	private Cuenta cuentaDueño;
 	private ListaSkinsPoseidas skinsPoseidas;
-	
+
 	public CampeonPoseido(Campeon champ, Cuenta cuentaDueño) {
 		this.champ = champ;
 		this.cuentaDueño = cuentaDueño;
@@ -36,6 +36,5 @@ public class CampeonPoseido {
 	public void setSkinsPoseidas(ListaSkinsPoseidas skinsPoseidas) {
 		this.skinsPoseidas = skinsPoseidas;
 	}
-	
 
 }

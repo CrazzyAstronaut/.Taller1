@@ -6,7 +6,7 @@ public class ListaSkins {
 	private int max;
 	private int cant;
 	private Skin [] lista;
-	
+
 	public ListaSkins(int max) {
 		this.max = max;
 		this.cant = 0;
@@ -36,24 +36,27 @@ public class ListaSkins {
 	public void setLista(Skin[] lista) {
 		this.lista = lista;
 	}
+
 	public Skin getSkin(int index) {
 		return lista[index];
-		}
+	}
+
 	public Skin getSkin(String nombre) {
-		for(int i = 0; i < cant ; i++ ) {
-			if(lista[i].getNombre().equalsIgnoreCase(nombre)){
+		for (int i = 0; i < cant; i++) {
+			if (lista[i].getNombre().equalsIgnoreCase(nombre)) {
 				return lista[i];
 			}
 		}
 		return null;
 	}
+
 	public boolean agregarSkin(Skin newskin) {
-		if(cant<max) {
+		if (cant < max) {
 			lista[cant] = newskin;
 			cant++;
 			return true;
 		}
 		return false;
 	}
-	
+
 }

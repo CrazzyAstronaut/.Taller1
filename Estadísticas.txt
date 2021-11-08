@@ -1,8 +1,9 @@
-Campeon1,1950
-Campeon2,0
+Campeon1,3900
+Campeon2,975
 Jinx,0
 Sett,0
 Lillia,0
 Vex,2325
 Jhin,4145
 Kaisa,2325
+Steve,0

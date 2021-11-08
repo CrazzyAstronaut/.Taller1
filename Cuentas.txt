@@ -1,3 +1,5 @@
-bicho177,123456,CrazzyAstronaut,202,9999999,1,Campeon1,1,Skin11,LAS
 NotPepito,PepitoGamer777,vegetta1111,434,12000,2,Vex,1,Portadora del amanecer,Jhin,2,Oscuridad Cosmica,Forajido,LAS 
 FenrirXs,Fenrir,menorque3,430,2000,1,Kaisa,1,Kda All Out,LAN
+bicho177,123456,CrazzyAstronaut,202,9999999,1,Campeon1,1,Skin11,LAS
+test,caracol123,LunariGamer,2,25,2,Campeon1,0,Campeon2,0,LAS
+trabis,1234,MarcianekeGod,1,999025,1,Campeon1,0,RU

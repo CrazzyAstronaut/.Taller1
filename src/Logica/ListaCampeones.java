@@ -5,8 +5,8 @@ import Dominio.Campeon;
 public class ListaCampeones {
 	private int max;
 	private int cant;
-	private Campeon [] lista;
-	
+	private Campeon[] lista;
+
 	public ListaCampeones(int max) {
 		this.max = max;
 		cant = 0;
@@ -36,14 +36,14 @@ public class ListaCampeones {
 	public void setLista(Campeon[] lista) {
 		this.lista = lista;
 	}
-	
+
 	public Campeon getCampeon(int index) {
 		return lista[index];
 	}
-		
+
 	public Campeon getCampeon(String nombre) {
-		for(int i = 0; i < cant ; i++ ) {
-			if(lista[i].getNombre().equalsIgnoreCase(nombre)){
+		for (int i = 0; i < cant; i++) {
+			if (lista[i].getNombre().equalsIgnoreCase(nombre)) {
 				return lista[i];
 			}
 		}
@@ -52,30 +52,30 @@ public class ListaCampeones {
 
 	public double getRecaudadoRol(String rol) {
 		int Recaudado = 0;
-		for(int i = 0; i < cant ; i++ ) {
-			if(lista[i].getRol().equals(rol)){
+		for (int i = 0; i < cant; i++) {
+			if (lista[i].getRol().equals(rol)) {
 				Recaudado += lista[i].getRecaudado();
 			}
 		}
-		return Recaudado*6.15;
+		return Recaudado * 6.15;
 	}
-	
- 	public boolean agregarCampeon(Campeon newchamp) {
-		if(cant<max) {
+
+	public boolean agregarCampeon(Campeon newchamp) {
+		if (cant < max) {
 			lista[cant] = newchamp;
 			cant++;
 			return true;
 		}
 		return false;
 	}
- 	
- 	public int cantCampeonesRol(String rol) {
- 		int cantidad = 0;
-		for(int i = 0; i < cant ; i++ ) {
-			if(lista[i].getRol().equals(rol)){
+
+	public int cantCampeonesRol(String rol) {
+		int cantidad = 0;
+		for (int i = 0; i < cant; i++) {
+			if (lista[i].getRol().equals(rol)) {
 				cantidad++;
 			}
 		}
 		return cantidad;
- 	}
+	}
 }

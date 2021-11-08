@@ -7,7 +7,7 @@ public class Campeon {
 	private String rol;
 	private int recaudado;
 	private ListaSkins InventarioSkins;
-	
+
 	public Campeon(String nombre, String rol) {
 		this.nombre = nombre;
 		this.rol = rol;
@@ -38,7 +38,7 @@ public class Campeon {
 	public void setRecaudado(int recaudado) {
 		this.recaudado = recaudado;
 	}
-	
+
 	public void addRecaudado(int add) {
 		this.recaudado += add;
 	}
@@ -50,6 +50,5 @@ public class Campeon {
 	public void setInventarioSkins(ListaSkins inventarioSkins) {
 		InventarioSkins = inventarioSkins;
 	}
-	
 
 }
